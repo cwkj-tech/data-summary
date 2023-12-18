@@ -801,37 +801,41 @@ p900数传传数据时断断续续
 - ![image-20231011123434832](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231011123434832.png)
 
 这个参数是检查解锁时是否有电池供电，默认是需要插电流计供电才可以解锁。如果想通过其他方式（如ESC供电）给飞控供电进行解锁，则需要设置该参数为894281。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20201110192037938.png#pic_center)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/20201110192037938.png)
 
 ## 三、USB连接检查CBRK_USB_CHK（USB相关报错）
 
 这个参数是检查起飞时是否有USB连接，默认情况下有USB连接时是无法解锁的，如果需要插USB解锁，需要设置为197848
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20201110192119958.png#pic_center)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/20201110192119958.png)
 
 ## 四、安全开关检查CBRK_IO_SAFETY
 
 默认情况下安全开关是慢闪状态，设置该参数蔚22027时，上电后安全开关自动切换为双闪。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20201110192151783.png#pic_center)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/20201110192151783.png)
 
 ## 五、high Accelerometer bios
 
-如果报错加速度偏移过大，high Accelerometer bios![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120133050501.png#pic_center)
+如果报错加速度偏移过大，high Accelerometer bios![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/20201120133050501.png)
 可以把`com_arm_ekf_ab`这个参数调大一些，在1.13以后版本的固件中，把`EKF2_ABL_LIM`调大。
+
 ## 六、high gyro bios
 同理可以通过改下面这个参数把陀螺仪的起飞检查阈值该大一些，`com_arm_ekf_gb`
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120134005559.png#pic_center)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/20201120134005559.png)
+
 ## 七、compasss inconsistent
 如果报罗盘某个度数没包含的错误，`COM_ARM_MAG_ANG`设为-1
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210520183053970.png)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/20210520183053970.png)
+
 ## 八、GPS报错
 如果GPS搜星少，长时间没有进入GPS定位，可以把下面`EKF2_GPS_CHECK`改成0
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20201120133324878.png#pic_center)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/20201120133324878.png)
 ## 九、Accels inconsistent
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/02e92d44b7884055b4ea7cf9eb8ebc18.png)
 把下面这个`COM_ARM_IMU_ACC`改大一些，图中以加速度计为例，如果陀螺仪出现类似报错也是修改相应的参数
-![在这里插入图片描述](https://img-blog.csdnimg.cn/1a4d75892f1d4017b7e8943280fd72d4.png)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/1a4d75892f1d4017b7e8943280fd72d4.png)
+
 ## 十、偏航角一直漂移
 解决办法是校准陀螺仪
 ## 十一、PREFLIGHT FAIL: ACCEL SENSORS INCONSISTENT - CHECK CALIBRATION
@@ -896,6 +900,7 @@ COM_CPU_MAX
 将`COM_ARM_HFLT_CHECK`改为Disabled
 ## 二十一、安全开关
 安全开关没打开也会导致无法解锁，有的是集成再GPS上，有的是单独的一个小按钮，慢闪就是没打开的状态，长按一下变成双闪，就是打开状态们就可以解锁了。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/909d0ec37a3d47e08e768fd8361928d3.png)
+![在这里插入图片描述](https://xujunpic.oss-cn-nanjing.aliyuncs.com/909d0ec37a3d47e08e768fd8361928d3.png)
+
 ## 二十二、连接地面站能解锁，断开地面站不能解锁
 参考第二节禁用电源检查
