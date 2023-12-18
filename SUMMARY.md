@@ -1095,3 +1095,380 @@ flightplot需要用java8，而ubuntu18.04默认是java11，需要更换
 选择从四元数到欧拉角
 点击 ok即可
 
+# 四、利用plotjuggler软件分析PX4的ulog日志(推荐)
+
+### **1,安装**
+
+安装包网盘链接：
+链接：https://pan.baidu.com/s/1QJXHaeb6d_zX_-IcezM-0Q?pwd=cwkj
+提取码：cwkj
+–来自百度网盘超级会员V6的分享
+如果是ros用户或者在ARM64平台上使用，可以用命令行安装
+
+`sudo apt-get install ros-melodic-plotjuggler`
+
+默认是不能分析ros的bag文件的，如果要分析bag文件，需要执行下面安装
+
+`sudo apt install ros-melodic-plotjuggler-ros`
+
+安装后运行
+`rosrun plotjuggler plotjuggler`  
+源码安装
+
+`mkdir -p ws_plotjuggler/src`
+`cd ws_plotjuggler/src`
+`git clone https://github.com/facontidavide/PlotJuggler.git`
+`cd ..`
+`catkin make`
+`source devel/setup.bash`
+
+安装后运行
+`rosrun plotjuggler plotjuggler`  
+直接使用appimage文件
+如果不想通过上面两种方式安装，可以直接下载appimage．
+下载地址
+https://github.com/facontidavide/PlotJuggler
+
+![image-20231218130736015](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218130736015.png)
+
+ubuntu下下载appimage文件然后添加一下可执行权限，然后双击打开即可．
+点击下图图标打开日志文件
+如下图
+
+![image-20231218130750045](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218130750045.png)
+
+如果是ulog文件可以直接打开
+
+![image-20231218130804121](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218130804121.png)
+
+如果是bag文件需要安装上面的ROS插件后才能选择
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218130815443.png" alt="image-20231218130815443" style="zoom:50%;" />
+
+打开bag文件后选择需要显示的话题,然后点击OK
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218130839606.png" alt="image-20231218130839606" style="zoom:50%;" />
+
+### **2,分析日志**
+
+打开后如下图所示，选中需要显示的数据，如果想在一幅图中显示多个数据，则按住Ctrl再同时选中多个数据．然后鼠标左键将选中的数据拖到右边的显示矿中，数据就可以显示．
+
+![image-20231218131015652](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131015652.png)
+
+如下图
+
+![image-20231218131026796](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131026796.png)
+
+如果要在该图右侧分出一栏，则鼠标右键该图，点击如下选项
+
+![image-20231218131050921](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131050921.png)
+
+如下图
+
+![image-20231218131058096](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131058096.png)
+
+如果要在该图下侧分出一栏，则鼠标右键该图，点击如下选项
+
+![image-20231218131109014](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131109014.png)
+
+如下图
+
+![image-20231218131118662](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131118662.png)
+
+如果要删除某一副图，则点击该图右上角×号即可
+
+![image-20231218131127955](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131127955.png)
+
+如果想放大图中的某些部分，则鼠标左键长按框选相应区域即可，如下图
+
+![image-20231218131140911](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131140911.png)
+
+如果向显示二维数据，可以按住control键，然后点击需要显示的数据，我这里以本地的XY数据为例，
+
+![image-20231218131151626](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131151626.png)
+
+同时选中两个数据后，松掉control键，按鼠标右键把两个数据拖到显示框，下图提示点击OK
+
+![image-20231218131203414](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131203414.png)
+
+就可以看到二维的XY
+
+![image-20231218131214727](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131214727.png)
+
+**四元数转欧拉角**
+点击软件左上角Tools->Quaternion to RPY
+然后将需要转换的四元数依次鼠标左键按住拖动到对应的输入框
+然后在Output栏输入转换后的名称前缀，最后点击Save
+
+![image-20231218131320080](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131320080.png)
+
+会在左下角显示生成的数据，将数据拖动到右边的显示框就可以显示曲线
+
+![image-20231218131331106](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131331106.png)
+
+如果想转换期望姿态的四元数，然后与当前姿态对比，可以按上面的操作，Output里面的前缀不要和前面一样
+
+![image-20231218131347781](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131347781.png)
+
+![image-20231218131402789](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131402789.png)
+
+![image-20231218131414198](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131414198.png)
+
+**快速傅里叶变换FFT**
+可以用于分析滤波参数的振动
+加载日志后，点击Tools->Fast Fourier Transform
+然后将陀螺仪的原始数据拖到右上角的显示框，会看到陀螺仪原始数据，再点击Calculate按钮，可以得到右下角的FFT图，根据这个图可以设置陀螺仪的截至频率参数。点Save Curve，可以再左下角生成一个gyro_rad.00_FFT，这个可以再关掉FFT页面后像其他数据一样拖到右侧显示框显示，因为值比较小，要放大观察，否则就是一条直线。
+同理可以将其他的数据（比如原始加速度/actuator controls等）按这个方法计算FFT，可以一次同时对多个数据进行FFT变换。
+常用的调参用的几个数据
+调gyro_cutoff，看sensor_combined/gyro_rad.00 sensor_combined/gyro_rad.001 sensor_combined/gyro_rad.02
+调dgyro_cutoff，看vehicle_angular_acceleration/xyz.00 vehicle_angular_acceleration/xyz.01 vehicle_angular_acceleration/xyz.02
+调accel_cutoff，看sensor_combined/accelerometer_m_s2.00 sensor_combined/accelerometer_m_s2.01 sensor_combined/accelerometer_m_s2.02
+
+![image-20231218131436072](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218131436072.png)
+
+# 五、使用Flight Review分析日志
+
+**1.在线分析**
+
+网址https://logs.px4.io/
+
+在线分析有时需要翻墙，推荐使用离线分析
+
+**2.离线分析**
+
+使用离线安装的方式使用Flight Review，可以在无需网络的情况下使用Flight Review
+
+`sudo apt-get install sqlite3 fftw3 libfftw3-dev`
+
+`sudo apt-get install libatlas3-base`
+
+`git clone --recursive https://github.com/PX4/flight_review.git`
+
+完整源码也可以在网盘下载：
+链接：https://pan.baidu.com/s/1hlCDG9OCHiNVradK1tr22Q?pwd=cwkj
+提取码：cwkj
+–来自百度网盘超级会员V6的分享
+
+`cd flight_review/app`
+
+`pip install -r requirements.txt`
+
+`./setup_db.py`
+
+`./serve.py --show`
+
+执行完最后一步就会弹出Flight Review网页，此网页不需要联网就可使用
+
+![image-20231218132329209](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218132329209.png)
+
+后面每次使用的时候只需要在flight_review/app目录下执行最后一步的命令即可
+
+# 第六章：常用参数调试
+
+## 一、滤波调参
+
+**建议先调完滤波参数再精调PID**，因为如果震动噪声较大且没有被滤掉的话，会导致电机输出噪声大，导致下面的现象
+
+1电机和电调可能会变热，甚至损坏。
+2续航时间变少，因为电机不断改变速度。
+3可见的随机小抽搐。
+此时只调PID很难达到理想的控制效果。
+
+产生震动的原因：
+1，桨叶损坏、动平衡差
+2，电机桨座不垂直，电机动平衡差
+3，机架刚性不足
+4，部件松动
+
+降低震动的方法：
+软件滤波：调低通滤波或者陷波滤波器参数
+硬件减震：调减震球的软度或者加配重
+
+调参时可以用自稳/定高模式飞行
+在调滤波器参数之前，可以先大致调一下PID的参数，角度率环的P和D不要设置的太高，能飞并且没有明显超调和振荡就可以
+通常默认PID参数就可以
+
+PX4里面可以调整低通滤波器的截止频率参数来过滤掉高频噪声。**截止频率越小，过滤的越彻底，但是带来的控制延时越大。截止频率越大，延时越小，但是会使噪声变大。**
+
+延时会影响控制效果。如果控制延时较大，则相应的PID的P项就不能设置的太大。同样的PID参数，低延时的飞机可能飞行很好，延时大的飞机可能直接发散，只能调小PID才能飞起来，相应的控制效果也会变差。影响延时的因素如下：
+
+1.机身较软，或者安装有减震板（这相当于硬件滤波）
+2.软件上的低通滤波
+3.PX4固件从数据读取到控制输出的计算延时
+4.陀螺仪的最大输出频率，（使用参数IMU_GYRO_RATEMAX配置）。较高的速率减少了延迟，但可能会占用其他进程计算资源。仅建议使用STM32H7处理器或更新处理器的控制器使用4 kHz或更高频率（2 kHz值接近功能较差处理器的极限）。
+5.与使用AUX引脚相比，IO芯片（MAIN引脚）增加了约5.4毫秒的延迟。为避免IO延迟，请禁用SYS_USE_IO并将电机连接到AUX引脚。
+6.PWM输出信号：启用Dshot或One Shot以减少延迟。
+7.执行器的控制延时，一般小轴距飞机的电机相应快，大轴距飞机的电机KV低，响应慢。因此大轴距的飞机PID不能太大。
+
+**滤波器参数**
+陀螺仪数据的陷波滤波器，用于滤除窄带噪声，例如桨叶频率处的谐波。可以使用IMU_GYRO_NF0_BW和IMU_GYROC_NF0_FRQ配置此滤波器。
+
+陀螺仪传感器数据的低通滤波器。可以使用IMU_GYRO_CUTOFF参数进行配置。
+
+陀螺仪D项上的一个单独的低通滤波器。D项最容易受到噪声的影响，而稍微增加的延迟不会对性能产生负面影响。因此，D项具有可单独配置的低通滤波器IMU_DGYRO_CUTOFF。
+
+电机输出（MOT_SLEW_MAX）上的滑动滤波器。一般不使用。
+
+调参前需要配置日志记录参数：SDLOG_PROFILE ，勾选High rate。
+调参数IMU_GYRO_CUTOFF。
+看陀螺仪数据的FFT频谱图
+以下图为例，在40HZ以后的噪声比较多，可以设置IMU_GYRO_CUTOFF为35。
+调参数IMU_DGYRO_CUTOFF。
+看角加速度的FFT图
+以下图为例，在40Hz以后有一个噪声高峰，可以设置IMU_DGYRO_CUTOFF为35
+
+![image-20231218133432100](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133432100.png)
+
+调参数IMU_ACCEL_CUTOFF。
+看加速度数据的FFT图。
+以下图为例，在35Hz以后的振动比较大，可以设置IMU_ACCEL_CUTOFF为30
+
+![image-20231218133454859](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133454859.png)
+
+调完参数可以看actuator_control的FFT，查看控制输出的噪声是否在可接受的范围。
+除了软件上的滤波，还需要在硬件上减少振动，例如飞控安装减震，飞机上的所有部件都安装牢固，桨叶动平衡。机架尽量用强度高，轴距小的的机架，电机用高KV值电机（高频振动更好滤除）
+
+陷波滤波器调参
+有的时候FFT在一个较低的频率处有个尖峰，如果想用低通滤波将其滤除的话，需要将截止频率设置的很低，会使延时增大，此时可以通过陷波滤波器将其滤除。
+需要注意的是，这种尖峰可能是由于飞机部件松动引起的振动，加固飞机可能比调滤波参数更有效果
+
+![image-20231218133512201](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133512201.png)
+
+上图需要设置两个陷波滤波器，上图的IMU_GYRO_CUTOFF可以设置为120.
+
+第一个：
+频率参数IMU_GYRO_NF0_FRQ设置为20
+陷波区间IMU_GYRO_NF0_BW 设置为10
+第二个：
+频率参数IMU_GYRO_NF0_FRQ设置为26.5
+陷波区间IMU_GYRO_NF0_BW 设置为2
+
+陷波滤波后的效果如下：
+
+![image-20231218133536184](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133536184.png)
+
+一般穿越机的IMU_GYRO_CUTOFF可以设置为120，IMU_DGYRO_CUTOFF可以设置为50到80
+大的机架就根据FFT具体设置。
+
+## 二、PID调参
+
+**1.自动调参**
+如果使用自动调参，需要使用新版的QGC地面站
+PX4自动调参可以用hold模式调参，先起飞，然后切换到hold模式，调角速率环的话，点击下图的Autotune，飞机会自动进行roll/pitch/yaw角速率PID的调整。调整期间可以看到飞机会自动执行一些动作。
+
+![image-20231218133804006](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133804006.png)
+
+调整完后，可以看到地面站提示降落飞机，自动调参的进度条提示wait for disarm，此时降落飞机
+
+![image-20231218133818608](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133818608.png)
+
+降落后可以看到地面站提示Autotune successful，说明调参成功。
+
+![image-20231218133833584](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133833584.png)
+
+角度环的自动调参同角速率环
+
+**2.手动调参**
+首先调角速率环，然后姿态环，再速度环，最后位置环。
+
+角速率环
+PX4角速率环PID流程如下
+
+![image-20231218133900698](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133900698.png)
+
+基于上图，有两种调参形式
+
+1.并行形式
+相当于K取常数
+
+![image-20231218133914054](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133914054.png)
+
+2.标准形式
+相当于P取常值，这种形式在数学上等同于并行形式，但主要优点是它将比例增益调谐与积分和导数增益解耦。这意味着，通过利用具有类似尺寸/惯性的无人机的增益，并简单地调整K增益，就可以很容易地调整新飞机，使其正常飞行。
+
+![image-20231218133926779](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218133926779.png)
+
+在调角速率PID时可以在自稳/特技模式下飞行，特技模式能更容易的看出调参效果，但更难操控，新手建议用自稳模式。
+一开始可以把roll/pitch的PID设置成一样，等调的差不多了，然后再对roll和pitch的PID单独细调，如果飞机是对称的，则roll和pitch的PID一样就可以了。yaw的调参方法和roll/pitch类似，但是yaw的D项一般为0.
+
+**调试步骤**
+
+使用plotjuggler分析日志
+
+期望的角速率如下：
+
+![2023-12-18_13-42](https://xujunpic.oss-cn-nanjing.aliyuncs.com/2023-12-18_13-42.png)
+
+当前的角速率如下：xyz.00代表的是roll的角速率，xyz.01代表的是pitch的角速率，xyz.02代表的是yaw的角速率
+
+![2023-12-18_13-44](https://xujunpic.oss-cn-nanjing.aliyuncs.com/2023-12-18_13-44.png)
+
+相应的参数：
+
+MC_ROLLRATE_P:横滚角速率环P项
+
+MC_ROLLRATE_I:横滚角速率环I项
+
+MC_ROLLRATE_D:横滚角速率环D项
+
+MC_ROLLRATE_K:横滚角速率环总的增益
+
+MC_PITCHRATE_P:俯仰角速率环P项
+
+MC_PITCHRATE_I:俯仰角速率环I项
+
+MC_PITCHRATE_D:俯仰角速率环D项
+
+MC_PITCHRATE_K:俯仰角速率环总的增益
+
+MC_YAWRATE_P:偏航角速率环P项
+
+MC_YAWRATE_I:偏航角速率环I项
+
+MC_YAWRATE_D:偏航角速率环D项
+
+MC_YAWRATE_K:偏航角速率环总的增益
+
+**横滚/俯仰角速率环P项调节**
+
+将角速率环的I和D都置0，K置为1，然后调节P项，从小到大开始调。
+
+P项过高：高频振荡
+如下图，红色是当前角速率，绿色是期望角速率，大概以10Hz频率振荡
+
+![image-20231218140450174](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218140450174.png)
+
+P项过低：对操纵反映迟缓，在特技模式下可以看到姿态的漂移。
+如下图，红色是当前角速率，绿色是期望角速率，可以看到当前角速率曲线的相位明显滞后于期望的角速率
+
+![image-20231218140504846](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218140504846.png)
+
+每次增加20-30%的增益，最终微调时减少到5-10%。
+较好的P如下图，红色的为期望角速度，蓝色为当前角速度。相应较快，且没有明显的超调和振荡（两者还存在较大的静差，这是由于现在的I项为0）
+
+![image-20231218140514549](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218140514549.png)
+
+I项调节
+调好P后，就可以调节I
+I项过高：低频振荡
+如下图，红色是当前角速率，蓝色是期望角速率，几乎没有静差，但过高的I也会导致振荡
+
+![image-20231218140619880](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218140619880.png)
+
+I项过低：静差较大，如下图，红色是当前姿态，蓝色是期望姿态
+
+![image-20231218140629138](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218140629138.png)
+
+较好的I效果如下，没有振荡，也没有明显的静差。
+D项调节
+D项的主要作用是抑制超调，但不宜过大，因为会放大噪声
+
+D项过大：电机会发烫，并且电机会抽搐（听声音就是高频的忽高忽低声音），并且对操纵的反映比较迟钝。
+可以看到电机的输出变化非常剧烈。
+
+![image-20231218140657525](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218140657525.png)
+
+D项过小：在阶跃输入后会出现超调，例如在自稳模式猛打杆后立刻将杆回中，可以看到飞机来会振荡几次后才恢复水平。此时可以调大D，直到飞机能够直接恢复水平而没有明显振荡。
+
+姿态环
+姿态环只有比例项，调参比较简单，如果P太小，操纵会比较迟钝，P太大也会出现振荡或超调，一般默认值就可以用。
