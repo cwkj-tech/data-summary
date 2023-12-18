@@ -18,7 +18,7 @@ https://blog.csdn.net/qq_38768959/article/details/121270282?ops_request_misc=%25
 
 虚拟机提供了VMware Workstation 16 PRO和VMware Workstation 17
 
-建议安装VMware Workstation 17
+**建议安装VMware Workstation 17**
 
 
 
