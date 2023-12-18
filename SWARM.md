@@ -10,7 +10,11 @@ typora-copy-images-to: upload
 
 PX4固件基于PX4 1.14.0最新稳定版
 
+项目地址：https://gitee.com/Mbot_admin/px4-1.14.0-leader-follow
+
 QGC基于4.3最新稳定版
+
+项目地址：https://gitee.com/Mbot_admin/qgc-4.3-leader-follow-swarm
 
 # 系统架构
 
