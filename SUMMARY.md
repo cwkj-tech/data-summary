@@ -10,7 +10,7 @@ typora-copy-images-to: upload
 
 
 
-# 无人机基础调试
+# 第一章：无人机基础调试
 
 ## 一、下载固件
 
@@ -295,7 +295,7 @@ Dshot协议的电调可以在地面站中直接设置电机的转向，如下图
 
 
 
-# 遥控器的使用
+# 第二章：遥控器的使用
 
 
 
@@ -667,7 +667,7 @@ SBUS 信号工作模式：
 
 
 
-# 电台配置
+# 第三章：电台配置
 
 ## P900
 
@@ -780,7 +780,7 @@ p900数传传数据时断断续续
 
 
 
-# 飞控常见解锁失败报错及解决方法
+# 第四章：飞控常见解锁失败报错及解决方法
 
 ## 一、Kill switch engagen
 
@@ -904,3 +904,194 @@ COM_CPU_MAX
 
 ## 二十二、连接地面站能解锁，断开地面站不能解锁
 参考第二节禁用电源检查
+
+
+
+# 第五章：日志分析
+
+## 一、下载日志
+
+将飞控**用USB**链接地面站，在下图页面点击“刷新”，即可看到保存的日志（前提是要有TF卡）
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218114239793.png" alt="image-20231218114239793" style="zoom:67%;" />
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/2023-12-18_11-43.png" alt="2023-12-18_11-43" style="zoom: 50%;" />
+
+选择需要下载的日志，点击右侧的“下载”，然后选择目录即可进行下载，如果想擦除所有的日志，可以点击右侧的“擦除全部”
+
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/2023-12-18_11-46.png" alt="2023-12-18_11-46" style="zoom:50%;" />
+
+**常见问题：**
+
+1,飞控有插tf卡，但是地面站刷新不出日志
+
+解决办法：将tf卡格式化
+
+![image-20231218114003004](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218114003004.png)
+
+2,显示日期未知
+
+这是由于飞控没有GPS校准时间，可以把旧的日志都删除，新刷出来的日志就是上一次飞行的日志。
+
+## 二、ulog转CSV
+
+**ubuntu安装pyulog**
+执行：
+
+```
+sudo -H python3 -m pip install pyulog
+```
+然后在终端执行
+
+```
+ulog2csv ulog日志文件名
+```
+即可将ulog文件转为csv文件
+
+**windos安装pyulog**
+
+先安装anaconda，下载地址
+[https://www.anaconda.com/products/distribution#windows](https://www.anaconda.com/products/distribution#windows)
+或者从网盘下载
+链接：https://pan.baidu.com/s/1xpqsgKdh0i-vMWZIlQqv0A?pwd=78ih 
+提取码：78ih 
+--来自百度网盘超级会员V5的分享
+下载完一直next安装
+安装完后打开anaconda prompt，执行
+
+```
+pip install pyulog
+```
+定位到ulg文件目录下运行
+
+```
+ ulog2csv XXXXXXX.ulg
+```
+
+**执行转换**
+
+PX4的日志是二进制的ulog文件，如果想转换成CSV文件在matlab里绘图，可以在需要转化的ulog文件目录下
+执行
+
+`ulog2csv   XXX.ulog`
+
+会自动在当前目录下生成一系列csv文件
+将csv文件拖到matlab界面中，会弹出下面的页面，点击导入
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115055114.png" alt="image-20231218115055114" style="zoom:50%;" />
+
+会提示导入到工作区，这时可以调用画线函数plot进行划线
+
+![image-20231218115123252](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115123252.png)
+
+![image-20231218115130563](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115130563.png)
+
+调用
+
+`plot(log520201010105015sensormag0.timestamp,log520201010105015sensormag0.x)`
+
+可以得到一条线
+如果要在同一个页面画多条线，可以用hold on
+
+`plot(log520201010105015sensormag0.timestamp,log520201010105015sensormag0.x)`
+`hold on`
+`plot(log520201010105015sensormag0.timestamp,log520201010105015sensormag0.y)`
+
+得到下图
+
+1. <img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115224342.png" alt="image-20231218115224342" style="zoom:50%;" />
+
+给曲线添加注释可以通过
+
+`legend('UAV1','UAV2','UAV3','UAV4','UAV5');`
+
+## 三、利用flightplot软件分析PX4的ulog日志
+
+**1 windos安装**
+下载下面两个软件，地址
+链接：https://pan.baidu.com/s/14mN28Fn0IlSA4vDu_dATKA
+提取码：yi3g
+复制这段内容后打开百度网盘手机App，操作更方便哦
+先安装jdk，然后就可以双击打开flightplot软件
+
+![image-20231218115423154](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115423154.png)
+
+**2 ubuntu18.04安装**
+参考视屏https://www.bilibili.com/video/BV1mi4y1s7q6
+第一步：
+
+`git clone --recursive https://github.com/PX4/FlightPlot.git`
+
+第二步：
+
+`sudo apt-get install openjdk-8-jdk`
+
+第三步：
+flightplot需要用java8，而ubuntu18.04默认是java11，需要更换
+
+`sudo update-alternatives --config java`
+
+出现如下页面，如果不是java-8。输入2，回车，配置成java-8
+
+![image-20231218115634645](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115634645.png)
+
+重启电脑
+安装flightplot
+
+`cd FlightPlot`
+`ant gen_deb`
+`sudo dpkg -i out/production/FlightPlot.deb`
+
+注意在上面配置成java-8之后如果没有重启电脑，会导致安装的flightplot不能显示日志的信息，如下
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115652846.png" alt="image-20231218115652846" style="zoom:50%;" />
+
+此时需要重启电脑清除重新安装
+
+`ant clean`
+再执行安装flightplot步骤
+安装完成后可以添加到收藏夹
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115719293.png" alt="image-20231218115719293" style="zoom: 25%;" />
+
+**使用软件**
+
+点击打开日志
+
+![image-20231218115755702](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115755702.png)
+
+选择日志
+
+![image-20231218115806716](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115806716.png)
+
+这个时候不会显示数据曲线
+点击下图选项
+
+![image-20231218115816033](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115816033.png)
+
+选择需要显示的数据
+以x位置为例
+
+![image-20231218115825156](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115825156.png)
+
+选择Simple类型
+
+![image-20231218115834143](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115834143.png)
+
+即可看到曲线
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115844035.png" alt="image-20231218115844035" style="zoom: 25%;" />
+
+如果要把四元数转成欧拉角显示
+
+<img src="https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115901666.png" alt="image-20231218115901666" style="zoom:50%;" />
+
+先同时选中四个四元数，按住ctl即可多选
+然后点击add
+
+![image-20231218115916533](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231218115916533.png)
+
+选择从四元数到欧拉角
+点击 ok即可
+
