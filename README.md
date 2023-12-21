@@ -20,7 +20,7 @@
 
 qq技术交流群
 
-![image-20231221190623386](/home/cwkj/.config/Typora/typora-user-images/image-20231221190623386.png)
+![image-20231221190623386](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231221190623386.png)
 
 [B站](https://space.bilibili.com/479817593?spm_id_from=333.1007.0.0)
 
