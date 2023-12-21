@@ -16,6 +16,12 @@ QGC基于4.3最新稳定版
 
 项目地址：https://gitee.com/Mbot_admin/qgc-4.3-leader-follow-swarm
 
+完整源码压缩包网盘地址：
+
+链接：https://pan.baidu.com/s/1lqJkHrdJMtmvvseYr4iUEw?pwd=cwkj 
+提取码：cwkj 
+--来自百度网盘超级会员V6的分享
+
 # 系统架构
 
 通信拓扑：
