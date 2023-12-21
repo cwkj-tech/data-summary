@@ -54,7 +54,7 @@ qgc--开启编队-->通信接口;
 make px4_sitl_default gazebo
 ```
 
-然后打开配套QGC软件（地址：https://gitee.com/Mbot_admin/qgc-4.3-leader-follow-swarm.git）
+然后打开[配套QGC](https://gitee.com/Mbot_admin/qgc-4.3-leader-follow-swarm)软件
 
 点击开始编队
 
