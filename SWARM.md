@@ -22,6 +22,12 @@ QGC基于4.3最新稳定版
 提取码：cwkj 
 --来自百度网盘超级会员V6的分享
 
+含编队源码和编译环境的虚拟机（用VM17打开）
+
+链接：https://pan.baidu.com/s/1H7DKdaeKPs5rsd_v0rCCnQ?pwd=cwkj 
+提取码：cwkj 
+--来自百度网盘超级会员V6的分享
+
 # 系统架构
 
 通信拓扑：
