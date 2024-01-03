@@ -6,7 +6,7 @@
 
 [领航-跟随法编队使用手册](SWARM.md)
 
-[四旋翼单机调试手册](SUMMARY.md)
+[四旋翼单机调试手册](https://cwkj-tech.yuque.com/org-wiki-cwkj-tech-fur0zy/ot8sbi/ctagtiosivuo6uq2)
 
 [完整的各版本PX4固件原版源码](PX4.md)
 
