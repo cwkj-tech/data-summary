@@ -18,7 +18,7 @@
 
 商务合作：13913303339
 
-qq技术交流群
+q q技术交流群
 
 ![image-20231221190623386](https://xujunpic.oss-cn-nanjing.aliyuncs.com/image-20231221190623386.png)
 
